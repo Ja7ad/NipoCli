@@ -1,2 +1,2 @@
 # NipoCli
-Nipo In memory database Interactive Shell Implementation
+Nipo In memory database Interactive Shell
