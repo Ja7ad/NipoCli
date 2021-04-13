@@ -6,10 +6,10 @@ import (
 )
 
 // map for values in the context.
-type contextValues map[string]interface{}
+type ContextValues map[string]interface{}
 
 type Context struct {
-	contextValues
+	ContextValues
 	err     error
 	Args    []string
 	RowArgs []string
@@ -23,12 +23,12 @@ func (c *Context) Err(err error) {
 }
 
 // Get Context getter
-func (c contextValues) Get(key string) interface{} {
+func (c ContextValues) Get(key string) interface{} {
 	return c[key]
 }
 
 // Set Context setter
-func (c *contextValues) Set(key string, value interface{}) {
+func (c *ContextValues) Set(key string, value interface{}) {
 	if *c == nil {
 		*c = make(map[string]interface{})
 	}
@@ -36,12 +36,12 @@ func (c *contextValues) Set(key string, value interface{}) {
 }
 
 // Del Context Deleter
-func (c contextValues) Del(key string) {
+func (c ContextValues) Del(key string) {
 	delete(c, key)
 }
 
 // Keys return all keys in the context
-func (c contextValues) Keys() (keys []string) {
+func (c ContextValues) Keys() (keys []string) {
 	for key := range c {
 		keys = append(keys, key)
 	}
