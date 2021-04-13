@@ -17,17 +17,17 @@ type Context struct {
 	module.Actions
 }
 
-// Context error interface
+// Err Context error interface
 func (c *Context) Err(err error) {
 	c.err = err
 }
 
-// Context getter
+// Get Context getter
 func (c contextValues) Get(key string) interface{} {
 	return c[key]
 }
 
-// Context setter
+// Set Context setter
 func (c *contextValues) Set(key string, value interface{}) {
 	if *c == nil {
 		*c = make(map[string]interface{})
@@ -35,12 +35,12 @@ func (c *contextValues) Set(key string, value interface{}) {
 	(*c)[key] = value
 }
 
-// Context Deleter
+// Del Context Deleter
 func (c contextValues) Del(key string) {
 	delete(c, key)
 }
 
-// return all keys in the context
+// Keys return all keys in the context
 func (c contextValues) Keys() (keys []string) {
 	for key := range c {
 		keys = append(keys, key)
