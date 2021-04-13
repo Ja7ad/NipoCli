@@ -17,7 +17,7 @@ type CMD struct {
 	Help        string
 	LongHelp    string
 	Completer   func(args []string) []string
-	subcommands map[string]*CMD
+	SubCommands map[string]*CMD
 }
 
 type cmdSorter []*CMD
@@ -28,21 +28,21 @@ func (c cmdSorter) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
 
 // AddCommand Add New command
 func (c *CMD) AddCommand(cmd *CMD) {
-	if c.subcommands == nil {
-		c.subcommands = make(map[string]*CMD)
+	if c.SubCommands == nil {
+		c.SubCommands = make(map[string]*CMD)
 	}
-	c.subcommands[cmd.Name] = cmd
+	c.SubCommands[cmd.Name] = cmd
 }
 
 // DeleteCommand Delete command
 func (c *CMD) DeleteCommand(name string) {
-	delete(c.subcommands, name)
+	delete(c.SubCommands, name)
 }
 
 // SubCommand return subcommand list
 func (c *CMD) SubCommand() []*CMD {
 	var cmds []*CMD
-	for _, cmd := range c.subcommands {
+	for _, cmd := range c.SubCommands {
 		cmds = append(cmds, cmd)
 	}
 	sort.Sort(cmdSorter(cmds))
@@ -51,11 +51,11 @@ func (c *CMD) SubCommand() []*CMD {
 
 // CheckSubCommand Check your command is sub command
 func (c *CMD) CheckSubCommand() bool {
-	if len(c.subcommands) > 1 {
+	if len(c.SubCommands) > 1 {
 		return true
 	}
-	if _, ok := c.subcommands["help"]; !ok {
-		return len(c.subcommands) > 0
+	if _, ok := c.SubCommands["help"]; !ok {
+		return len(c.SubCommands) > 0
 	}
 	return false
 }
@@ -91,10 +91,10 @@ func (c CMD) NipoHelp() string {
 
 // FindSubCommand Find sub command in list commands
 func (c *CMD) FindSubCommand(name string) *CMD {
-	if cmd, ok := c.subcommands[name]; ok {
+	if cmd, ok := c.SubCommands[name]; ok {
 		return cmd
 	}
-	for _, cmd := range c.subcommands {
+	for _, cmd := range c.SubCommands {
 		for _, alias := range cmd.Aliases {
 			if alias == name {
 				return cmd
