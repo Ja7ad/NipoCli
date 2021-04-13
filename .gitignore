@@ -16,3 +16,6 @@
 
 # goland settings
 .idea
+
+# vscode settings
+.vscode
